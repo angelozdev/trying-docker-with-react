@@ -3,24 +3,26 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
-import { usersAPI } from "@features/users/api";
 import UserList from "./user-list";
-import { User } from "@/typings";
+import { mockTodos, mockUsers } from "@/utils/testUtils";
 
 describe("UserList", () => {
-  it("should render", async () => {
-    const getAllUsers = jest.spyOn(usersAPI, "getAll").mockReturnValue(
-      Promise.resolve([
-        {
-          id: 1,
-          username: "username",
-        },
-      ] as User[])
-    );
+  beforeEach(() => {
+    mockTodos();
+    mockUsers();
+  });
+
+  it("should render all users with their todos", async () => {
+    const users = mockUsers({ countUsers: 2 });
+    const todos = mockTodos();
 
     render(<UserList />);
     await waitForElementToBeRemoved(() => screen.getByText("loading users..."));
-    screen.debug();
-    expect(getAllUsers).toHaveBeenCalledWith({ limit: 3 });
+    await waitForElementToBeRemoved(() =>
+      screen.getAllByText("loading todos...")
+    );
+
+    users.forEach((user) => screen.getByText(user.username));
+    todos.forEach((todo) => screen.getAllByText(todo.title, { exact: false }));
   });
 });

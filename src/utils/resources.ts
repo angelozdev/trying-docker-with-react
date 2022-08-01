@@ -26,7 +26,6 @@ export function createResource<Type>(promise: Promise<Type>) {
   promise
     .then(sleep)
     .then((data) => {
-      if (shouldFail()) throw new Error("we can not get data");
       state.status = "resolved";
       state.data = data;
     })
