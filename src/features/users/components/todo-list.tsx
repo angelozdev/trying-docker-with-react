@@ -18,7 +18,7 @@ function TodoList({ todosResource }: TodoListProps) {
   const todos = todosResource.read();
 
   return (
-    <List className="todo-list" items={todos}>
+    <List className="ml-4" items={todos}>
       {({ id, title, completed }) => (
         <TodoItem key={id} title={title} isCompleted={completed} />
       )}

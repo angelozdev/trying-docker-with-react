@@ -26,8 +26,8 @@ const UserItem = memo<UserItemProps>(({ username, id }) => {
   );
 
   return (
-    <List.Item>
-      <h2>{username}</h2>
+    <List.Item className="mb-4">
+      <h2 className="text-lg font-semibold">{username}</h2>
       <ErrorBoundary FallbackComponent={TodoListFallback} onReset={retry}>
         <Suspense fallback={<TodoListPlaceholder />}>
           <TodoList todosResource={todosResource} />
@@ -54,23 +54,28 @@ function UserListContainer() {
 function UserList({ usersResource }: UserListProps) {
   const [users, setUsers] = useState(usersResource.read);
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLoadMore = async () => {
+    setIsLoading(true);
     const nextPage = page + 1;
-    const newUsers = await usersAPI.getAll({ page: nextPage, limit: 5 });
+    const newUsers = await usersAPI.getAll({ page: nextPage, limit: 3 });
     setUsers((prevUsers) => [...prevUsers, ...newUsers]);
     setPage(nextPage);
+    setIsLoading(false);
   };
 
   return (
     <Fragment>
-      <List className="user-list" items={users}>
+      <List className="mb-4" items={users}>
         {({ id, username }) => (
           <UserItem key={id} id={id} username={username} />
         )}
       </List>
 
-      <button onClick={handleLoadMore}>Load more</button>
+      <button disabled={isLoading} onClick={handleLoadMore}>
+        {isLoading ? "Loading..." : "Load more"}
+      </button>
     </Fragment>
   );
 }
