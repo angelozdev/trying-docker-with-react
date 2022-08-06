@@ -22,7 +22,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: tests
+    needs: front-tests
     steps:
       - uses: actions/checkout@master
 
