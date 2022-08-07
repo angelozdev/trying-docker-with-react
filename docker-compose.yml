@@ -1,6 +1,8 @@
 version: "3.8"
 services:
   react-app:
-    build: .
+    build:
+      context: app
+      dockerfile: Dockerfile
     ports:
       - "80:80"

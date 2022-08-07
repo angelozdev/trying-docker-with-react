@@ -16,7 +16,7 @@ button {
 }
 
 button:hover {
-  @apply bg-blue-600;
+  @apply bg-blue-900;
 }
 
 button:focus {

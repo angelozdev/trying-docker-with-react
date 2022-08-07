@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  react-app-dev:
+    build:
+      context: app
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/src:/app/src
