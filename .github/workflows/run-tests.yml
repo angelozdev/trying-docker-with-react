@@ -4,15 +4,18 @@ on:
     branches: [main]
 
 jobs:
-  run-tests:
+  front-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - uses: "actions/setup-node@main"
         with:
           node-version: "16.x"
+
       - name: "Install dependencies"
+        working-directory: ./app
         run: npm install
 
       - name: "Run tests"
+        working-directory: ./app
         run: npm run test
