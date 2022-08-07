@@ -1,8 +1,16 @@
 version: "3.8"
 services:
-  react-app:
+  react-app-front:
+    container_name: fronted
     build:
       context: app
       dockerfile: Dockerfile
     ports:
       - "80:80"
+
+  react-app-server:
+    build:
+      context: app
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"

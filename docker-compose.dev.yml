@@ -1,6 +1,8 @@
 version: "3.8"
 services:
   react-app-dev:
+    container_name: frontend
+    image: react-app-front
     build:
       context: app
       dockerfile: Dockerfile.dev
@@ -8,3 +10,14 @@ services:
       - "3000:3000"
     volumes:
       - ./app/src:/app/src
+
+  server:
+    container_name: server
+    image: react-app-server
+    build:
+      context: server
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./server/src:/server/src
