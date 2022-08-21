@@ -3,16 +3,32 @@
 @tailwind utilities;
 
 body {
-  @apply bg-slate-800 text-white;
+  @apply bg-stone-900 text-white;
 }
 
-button {
-  @apply bg-slate-900
+button,
+button[type="submit"] {
+  @apply bg-slate-800
   rounded-lg
   border
   border-transparent
   px-4
+  transition-colors
+  outline-offset-2
   py-2;
+}
+
+input {
+  @apply border
+  border-slate-800
+  rounded-lg
+  px-4
+  py-2;
+}
+
+input:hover {
+  @apply border-blue-900
+  transition-colors;
 }
 
 button:hover {

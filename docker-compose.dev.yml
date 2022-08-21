@@ -2,7 +2,7 @@ version: "3.8"
 services:
   react-app-dev:
     container_name: frontend
-    image: react-app-front
+    image: angelozdev/react-app-dev:latest
     build:
       context: app
       dockerfile: Dockerfile.dev
@@ -12,12 +12,12 @@ services:
       - ./app/src:/app/src
 
   server:
-    container_name: server
-    image: react-app-server
+    container_name: backend
+    image: angelozdev/server-dev:latest
     build:
       context: server
       dockerfile: Dockerfile.dev
     ports:
-      - "4000:4000"
+      - 4000:4000
     volumes:
       - ./server/src:/server/src

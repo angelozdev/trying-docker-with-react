@@ -1,16 +1,47 @@
 version: "3.8"
 services:
-  react-app-front:
+  front:
     container_name: fronted
     build:
-      context: app
+      context: ./app
       dockerfile: Dockerfile
     ports:
       - "80:80"
 
-  react-app-server:
+  server:
+    container_name: server
     build:
-      context: app
+      context: ./server
       dockerfile: Dockerfile
     ports:
       - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    restart: on-failure
+
+  worker:
+    container_name: worker
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    restart: on-failure
+
+  postgres:
+    image: postgres:14.5
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+
+  redis:
+    image: redis:7
+    container_name: redis
