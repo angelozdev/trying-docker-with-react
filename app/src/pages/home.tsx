@@ -10,7 +10,7 @@ function HomePage() {
   const getValues = async () => {
     const {
       data: { currentValues },
-    } = await axios.get("http://localhost:4000/values/current");
+    } = await axios.get("/api/values/current");
     const formattedValues = Object.entries(currentValues).map(
       ([index, value]) => ({
         index,
@@ -23,7 +23,7 @@ function HomePage() {
   const getIndexes = async () => {
     const {
       data: { values },
-    } = await axios.get("http://localhost:4000/values/all");
+    } = await axios.get("/api/values/all");
     const indexes = values.map((value: any) => String(value.number));
     setIndexes(indexes);
   };
@@ -33,7 +33,7 @@ function HomePage() {
     const formData = new FormData(form);
     const index = formData.get("index") as string;
 
-    await axios.post("http://localhost:4000/values", {
+    await axios.post("/api/values", {
       index,
     });
 

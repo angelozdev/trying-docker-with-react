@@ -1,20 +1,27 @@
 version: "3.8"
 services:
+  nginx:
+    depends_on:
+      - api
+      - front
+    restart: unless-stopped
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "3500:80"
+
   front:
     container_name: fronted
     build:
       context: ./app
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
+      dockerfile: Dockerfile.dev
 
-  server:
+  api:
     container_name: server
     build:
       context: ./server
       dockerfile: Dockerfile
-    ports:
-      - "4000:4000"
     environment:
       - NODE_ENV=production
       - REDIS_HOST=redis
